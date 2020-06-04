@@ -38,7 +38,6 @@ class _MyAppState extends Base<MyApp> {
     return FlutterEasyLoading(
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
-        title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,

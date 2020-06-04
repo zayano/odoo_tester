@@ -55,7 +55,7 @@ class _HomeDrawerState extends Base<HomeDrawer> {
               color: Colors.red,
             ),
             title: Text(
-              'Leads',
+              'Logout',
             ),
             onTap: () {
               Navigator.pop(context);

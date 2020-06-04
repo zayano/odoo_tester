@@ -5,6 +5,7 @@ class Strings {
   static const String loginAgainMessage = "Setting Saved! Please Login!";
   static const String invalidUrlMessage = "Can't connect to the server! Please enter valid URL";
   static const String no_orders = "No Orders";
+  static const String no_partners = "No Partners";
 
   // Route Name
   static const String route_home = "/home";
