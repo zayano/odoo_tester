@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widget/booking_list.dart';
 import '../model/user_odoo.dart';
-import '../widget/partner_list.dart';
 import '../service/odoo_response.dart';
 import '../utility/strings.dart';
 import '../widget/home_drawer.dart';
@@ -73,7 +73,7 @@ class _HomeState extends Base<Home> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(child: PartnerList()),
+      body: Center(child: BookingList()),
       drawer: HomeDrawer(_userOdoo, imageURL),
     );
   }
