@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widget/events_booking.dart';
 import '../widget/booking_list.dart';
 import '../model/user_odoo.dart';
 import '../service/odoo_response.dart';
@@ -73,7 +74,7 @@ class _HomeState extends Base<Home> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(child: BookingList()),
+      body: Center(child: EventsBooking()),
       drawer: HomeDrawer(_userOdoo, imageURL),
     );
   }

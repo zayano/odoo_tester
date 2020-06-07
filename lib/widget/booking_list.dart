@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/empty_list.dart';
@@ -30,11 +31,21 @@ class _BookingListState extends Base<BookingList> {
                   bookingList.add(
                     new MNCLandBooking(
                       id: i["id"],
-                      meetingSubject: i["meeting_subject"] is! bool ? i["meeting_subject"] : "No Subject",
-                      startDate: i["start_date"],
-                      durationStart: i["duration_start"] is! bool ? i["duration_start"] : "N/A",
-                      durationEnd: i["duration_end"] is! bool ? i["duration_end"] : "N/A",
-                      description: i["description"] is! bool ? i["description"] : "No Description",
+                      meetingSubject: i["meeting_subject"] is! bool
+                          ? i["meeting_subject"]
+                          : "No Subject",
+                      startDate: convertDateFromString(i["start_date"]),
+                      durationStart: i["duration_start"] is! bool
+                          ? convertDateFromString(i["duration_start"])
+                          : DateTime.now(),
+                      durationEnd: i["duration_end"] is! bool
+                          ? convertDateFromString(i["duration_end"])
+                          : DateTime.now(),
+                      description: i["description"] is! bool
+                          ? i["description"]
+                          : "No Description",
+                      background: Color(0xFF0F8644),
+                      isAllDay: false,
                     ),
                   );
                 }
@@ -47,6 +58,13 @@ class _BookingListState extends Base<BookingList> {
         );
       }
     });
+  }
+
+  DateTime convertDateFromString(String strDate) {
+    DateTime todayDate = DateTime.parse(strDate);
+    print(todayDate);
+    print(formatDate(todayDate,
+        [yyyy, '/', mm, '/', dd, ' ', hh, ':', nn, ':', ss, ' ', am]));
   }
 
   @override
@@ -84,7 +102,7 @@ class _BookingListState extends Base<BookingList> {
                     subtitle: Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(
-                        bookingList[i].startDate,
+                        bookingList[i].startDate.toString(),
                         style: TextStyle(color: Colors.grey, fontSize: 15.0),
                       ),
                     ),
