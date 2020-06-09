@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widget/booking_list.dart';
+import '../widget/meeting_plans.dart';
 import '../model/user_odoo.dart';
 import '../service/odoo_response.dart';
 import '../utility/strings.dart';
@@ -18,6 +18,8 @@ class _HomeState extends Base<Home> {
   String email;
   String imageURL;
   String sessionId;
+  String url;
+  DateTime startDay;
 
   _getUserData() async {
     isConnected().then((isInternet) {
@@ -48,11 +50,38 @@ class _HomeState extends Base<Home> {
     });
   }
 
+  _check() async {
+    isConnected().then((isInternet) {
+      if (isInternet) {
+        showLoading();
+        odoo
+            .checkInvent(Strings.res_company, '1', '2020-06-05 15:00:00',
+                '2020-06-05 18:59:59', '10')
+            .then(
+          (OdooResponse res) {
+            if (!res.hasError()) {
+              setState(() {
+                hideLoading();
+                String session = getSession();
+                session = session.split(",")[0].split(";")[0];
+                for (var i in res.getRecords()) {}
+              });
+            } else {
+              showMessage("Warning", res.getErrorMessage());
+            }
+          },
+        );
+      }
+    });
+  }
+
   @override
   void initState() {
     getOdooInstance().then((odoo) {
       _getUserData();
+      // _check();
       sessionId = getSession().split(';').elementAt(0);
+      url = getURL();
 
       if (getURL() != null) {
         imageURL = getURL() +
@@ -60,6 +89,8 @@ class _HomeState extends Base<Home> {
             sessionId +
             "&id=" +
             getUID().toString();
+
+        print(url);
       }
     });
 
@@ -68,12 +99,13 @@ class _HomeState extends Base<Home> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(child: BookingList()),
+      body: Center(child: MeetingPlans()),
       drawer: HomeDrawer(_userOdoo, imageURL),
     );
   }

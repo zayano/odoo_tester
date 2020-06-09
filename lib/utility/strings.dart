@@ -15,5 +15,6 @@ class Strings {
   // Model name
   static const String res_partner = "res.partner";
   static const String res_users = "res.users";
+  static const String res_company = "res.company";
   static const String mncl_booking = "mncl.booking";
 }

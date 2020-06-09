@@ -7,19 +7,26 @@ import '../model/mncl_booking.dart';
 import '../base.dart';
 
 class BookingList extends StatefulWidget {
+
   @override
   _BookingListState createState() => _BookingListState();
 }
 
 class _BookingListState extends Base<BookingList> {
   List<MNCLandBooking> bookingList = [];
+  DateTime dataDate;
 
   _getBookingList() async {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
-        odoo.searchRead(
-            Strings.mncl_booking, [], ['id', 'start_date', 'duration_start', 'duration_end', 'meeting_subject']).then(
+        odoo.searchRead(Strings.mncl_booking, [], [
+          'id',
+          'start_date',
+          'duration_start',
+          'duration_end',
+          'meeting_subject'
+        ]).then(
           (OdooResponse res) {
             if (!res.hasError()) {
               setState(() {
@@ -30,11 +37,19 @@ class _BookingListState extends Base<BookingList> {
                   bookingList.add(
                     new MNCLandBooking(
                       id: i["id"],
-                      meetingSubject: i["meeting_subject"] is! bool ? i["meeting_subject"] : "No Subject",
+                      meetingSubject: i["meeting_subject"] is! bool
+                          ? i["meeting_subject"]
+                          : "No Subject",
                       startDate: i["start_date"],
-                      durationStart: i["duration_start"] is! bool ? i["duration_start"] : "N/A",
-                      durationEnd: i["duration_end"] is! bool ? i["duration_end"] : "N/A",
-                      description: i["description"] is! bool ? i["description"] : "No Description",
+                      durationStart: i["duration_start"] is! bool
+                          ? i["duration_start"]
+                          : "N/A",
+                      durationEnd: i["duration_end"] is! bool
+                          ? i["duration_end"]
+                          : "N/A",
+                      description: i["description"] is! bool
+                          ? i["description"]
+                          : "No Description",
                     ),
                   );
                 }
@@ -52,10 +67,11 @@ class _BookingListState extends Base<BookingList> {
   @override
   void initState() {
     super.initState();
-
+  
     getOdooInstance().then((value) {
-      _getBookingList();
+     _getBookingList();
     });
+
   }
 
   @override

@@ -118,6 +118,13 @@ class Odoo {
     return await callKW(model, "unlink", [ids]);
   }
 
+  // CheckInvent record from system
+  Future<OdooResponse> checkInvent(String model, String id, String startDate,
+      String endDate, String limit) async {
+    return await callKW(
+        model, "check_inventory", [id, startDate, endDate, limit]);
+  }
+
   // Call json controller
   Future<OdooResponse> callController(String path, Map params) async {
     return await callRequest(createPath(path), createPayload(params));

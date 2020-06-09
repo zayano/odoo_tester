@@ -1,5 +1,5 @@
 name: testing_flutter
-description: A new Flutter project.
+description: A Testing Flutter Odoo.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -34,6 +34,8 @@ dependencies:
   flutter_easyloading: ^1.1.4
   sprintf: ^4.0.2
   syncfusion_flutter_calendar: ^18.1.55-beta
+  url_launcher: ^5.4.10
+  date_format: ^1.0.8
 
 dev_dependencies:
   flutter_test:
