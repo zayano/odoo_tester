@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../model/meeting_data_source.dart';
@@ -20,14 +21,52 @@ class _MeetingPlansState extends Base<MeetingPlans> {
   List<Meeting> meetings = [];
   String labelDate;
   DateTime date;
+  List<DateTime> dateDataList;
+  List<FlutterWeekViewEvent> weekEvent;
 
   var plan = [
-    {'label': 'test 1', 'date': '2020-06-04 13:27:00'},
-    {'label': 'test 2', 'date': '2020-06-12 13:27:00'},
-    {'label': 'test 3', 'date': '2020-06-19 13:27:00'},
-    {'label': 'test 4', 'date': '2020-06-21 13:27:00'},
-    {'label': 'test 5', 'date': '2020-06-25 13:27:00'},
-    {'label': 'test 6', 'date': '2020-06-28 13:27:00'},
+    {
+      'label': 'test 1',
+      'description' : 'Just Testing 1',
+      'start_date': '2020-06-03 08:00:00',
+      'end_date': '2020-06-03 10:00:00'
+    },
+    {
+      'label': 'test 2',
+      'description' : 'Just Testing 2',
+      'start_date': '2020-06-04 10:00:00',
+      'end_date': '2020-06-04 12:00:00'
+    },
+    {
+      'label': 'test 3',
+      'description' : 'Just Testing 3',
+      'start_date': '2020-06-09 09:00:00',
+      'end_date': '2020-06-09 11:00:00'
+    },
+    {
+      'label': 'test aja',
+      'description' : 'Just Testing Aja',
+      'start_date': '2020-06-09 15:00:00',
+      'end_date': '2020-06-09 17:00:00'
+    },
+    {
+      'label': 'test 4',
+      'description' : 'Just Testing 4',
+      'start_date': '2020-06-15 11:00:00',
+      'end_date': '2020-06-15 13:00:00'
+    },
+    {
+      'label': 'test 5',
+      'description' : 'Just Testing 5',
+      'start_date': '2020-06-16 13:00:00',
+      'end_date': '2020-06-16 15:00:00'
+    },
+    {
+      'label': 'test 6',
+      'description' : 'Just Testing 6',
+      'start_date': '2020-06-13 15:00:00',
+      'end_date': '2020-06-13 17:00:00'
+    },
   ];
 
   @override
@@ -42,23 +81,65 @@ class _MeetingPlansState extends Base<MeetingPlans> {
     meetings = <Meeting>[];
     for (var i in plan) {
       final String labelDate = i['label'];
-      final date = DateTime.parse(i['date']);
-      final DateTime startTime = DateTime(
-          date.year, date.month, date.day, date.hour, date.minute, date.second);
-      final DateTime endTime = startTime.add(const Duration(hours: 2));
-      meetings.add(Meeting(
-          labelDate, startTime, endTime, const Color(0xFF0F8644), false));
+      final dateStart = DateTime.parse(i['start_date']);
+      final dateEnd = DateTime.parse(i['end_date']);
+      final DateTime startTime = dateStart.add(Duration());
+      final DateTime endTime = dateEnd.add(Duration());
+      meetings.add(
+          Meeting(labelDate, startTime, endTime, Color(0xFF0F8644), false));
     }
     return meetings;
   }
 
+  List<DateTime> dateData() {
+    dateDataList = <DateTime>[];
+    for (var i in plan) {
+      final dateStart = DateTime.parse(i['start_date']);
+      dateDataList.add(dateStart);
+    }
+    return dateDataList;
+  }
+
+  List<FlutterWeekViewEvent> weekEvents() {
+    weekEvent = <FlutterWeekViewEvent>[];
+    for (var i in plan) {
+      final String labelDate = i['label'];
+      final String description = i['description'];
+      final dateStart = DateTime.parse(i['start_date']);
+      final dateEnd = DateTime.parse(i['end_date']);
+      weekEvent.add(FlutterWeekViewEvent(
+          title: labelDate,
+          description: description,
+          start: dateStart.add(Duration()),
+          end: dateEnd.add(Duration())));
+    }
+    return weekEvent;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SfCalendar(
-      view: CalendarView.month,
-      dataSource: MeetingDataSource(_getDataSource()),
-      monthViewSettings: MonthViewSettings(
-          appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
+    return WeekView(
+      dates: [
+        date.subtract(const Duration(days: 3)),
+        date.subtract(const Duration(days: 2)),
+        date.subtract(const Duration(days: 1)),
+        date,
+        date.add(const Duration(days: 1)),
+        date.add(const Duration(days: 2)),
+        date.add(const Duration(days: 3)),
+      ],
+      events: weekEvents(),
+      initialTime: const HourMinute(hour: 7),
+      style: WeekViewStyle(dayBarBackgroundColor: Colors.amber),
     );
+
+    // return SfCalendar(
+    //   view: CalendarView.month,
+    //   dataSource: MeetingDataSource(_getDataSource()),
+    //   monthViewSettings: MonthViewSettings(
+    //       appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
+    // );
   }
 }
