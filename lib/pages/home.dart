@@ -21,7 +21,7 @@ class _HomeState extends Base<Home> {
   String url;
   DateTime startDay;
 
-  _getUserData() async {
+  void _getUserData() async {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
@@ -50,7 +50,7 @@ class _HomeState extends Base<Home> {
     });
   }
 
-  _check() async {
+  void _check() async {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
@@ -99,7 +99,6 @@ class _HomeState extends Base<Home> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(

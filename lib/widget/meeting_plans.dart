@@ -27,43 +27,55 @@ class _MeetingPlansState extends Base<MeetingPlans> {
   var plan = [
     {
       'label': 'test 1',
-      'description' : 'Just Testing 1',
+      'description': 'Just Testing 1',
       'start_date': '2020-06-03 08:00:00',
       'end_date': '2020-06-03 10:00:00'
     },
     {
+      'label': 'test tambahan',
+      'description': 'Just Testing 1 tambahan',
+      'start_date': '2020-06-03 13:00:00',
+      'end_date': '2020-06-03 15:00:00'
+    },
+    {
       'label': 'test 2',
-      'description' : 'Just Testing 2',
+      'description': 'Just Testing 2',
       'start_date': '2020-06-04 10:00:00',
       'end_date': '2020-06-04 12:00:00'
     },
     {
       'label': 'test 3',
-      'description' : 'Just Testing 3',
+      'description': 'Just Testing 3',
       'start_date': '2020-06-09 09:00:00',
       'end_date': '2020-06-09 11:00:00'
     },
     {
+      'label': 'test copy',
+      'description': 'Just Testing 3',
+      'start_date': '2020-06-09 07:00:00',
+      'end_date': '2020-06-09 10:00:00'
+    },
+    {
       'label': 'test aja',
-      'description' : 'Just Testing Aja',
+      'description': 'Just Testing Aja',
       'start_date': '2020-06-09 15:00:00',
       'end_date': '2020-06-09 17:00:00'
     },
     {
       'label': 'test 4',
-      'description' : 'Just Testing 4',
+      'description': 'Just Testing 4',
       'start_date': '2020-06-15 11:00:00',
       'end_date': '2020-06-15 13:00:00'
     },
     {
       'label': 'test 5',
-      'description' : 'Just Testing 5',
+      'description': 'Just Testing 5',
       'start_date': '2020-06-16 13:00:00',
       'end_date': '2020-06-16 15:00:00'
     },
     {
       'label': 'test 6',
-      'description' : 'Just Testing 6',
+      'description': 'Just Testing 6',
       'start_date': '2020-06-13 15:00:00',
       'end_date': '2020-06-13 17:00:00'
     },
