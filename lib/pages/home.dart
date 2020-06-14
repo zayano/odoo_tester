@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testing_flutter/widget/partner_list.dart';
 
 import '../widget/meeting_plans.dart';
 import '../model/user_odoo.dart';
@@ -104,7 +105,7 @@ class _HomeState extends Base<Home> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(child: MeetingPlans()),
+      body: Center(child: PartnerList()),
       drawer: HomeDrawer(_userOdoo, imageURL),
     );
   }
