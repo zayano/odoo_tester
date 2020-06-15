@@ -7,7 +7,6 @@ import '../model/mncl_booking.dart';
 import '../base.dart';
 
 class BookingList extends StatefulWidget {
-
   @override
   _BookingListState createState() => _BookingListState();
 }
@@ -16,7 +15,7 @@ class _BookingListState extends Base<BookingList> {
   List<MNCLandBooking> bookingList = [];
   DateTime dataDate;
 
-  _getBookingList() async {
+  void _getBookingList() async {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
@@ -67,11 +66,10 @@ class _BookingListState extends Base<BookingList> {
   @override
   void initState() {
     super.initState();
-  
-    getOdooInstance().then((value) {
-     _getBookingList();
-    });
 
+    getOdooInstance().then((value) {
+      _getBookingList();
+    });
   }
 
   @override

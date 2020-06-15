@@ -57,29 +57,29 @@ abstract class Base<T extends StatefulWidget> extends State<T> {
     return user;
   }
 
-  saveUser(String userData) {
+  void saveUser(String userData) {
     if (preferences != null)
       preferences.setString(Constants.USER_PREF, userData);
   }
 
-  saveOdooUrl(String url) {
+  void saveOdooUrl(String url) {
     if (preferences != null) preferences.setString(Constants.ODOO_URL, url);
   }
 
   // This method is about push to new widget and replace current widget
-  pushReplacement(StatefulWidget screenName) {
+  void pushReplacement(StatefulWidget screenName) {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => screenName));
   }
 
   // This method is about push to new widget but don't replace current widget
-  push(StatefulWidget screenName) {
+  void push(StatefulWidget screenName) {
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => screenName));
   }
 
   // This method is about push to new widget and remove all previous widget
-  pushAndRemoveUntil(StatefulWidget screenName) {
+  void pushAndRemoveUntil(StatefulWidget screenName) {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (BuildContext context) => screenName),
@@ -87,7 +87,7 @@ abstract class Base<T extends StatefulWidget> extends State<T> {
   }
 
   // Show loading with optional message params
-  showLoading({String msg}) {
+  void showLoading({String msg}) {
     if (msg != null) {
       EasyLoading.show(status: msg);
     } else {
@@ -95,38 +95,38 @@ abstract class Base<T extends StatefulWidget> extends State<T> {
     }
   }
 
-  hideLoadingSuccess(String msg) {
+  void hideLoadingSuccess(String msg) {
     EasyLoading.showSuccess(msg, duration: Duration(seconds: 2));
     EasyLoading.dismiss();
   }
 
-  hideLoadingError(String msg) {
+  void hideLoadingError(String msg) {
     EasyLoading.showError(msg, duration: Duration(seconds: 2));
     EasyLoading.dismiss();
   }
 
-  hideLoading() {
+  void hideLoading() {
     EasyLoading.dismiss();
   }
 
-  showSnackBar(String msg) {
+  void showSnackBar(String msg) {
     scaffoldKey.currentState.showSnackBar(new SnackBar(content: Text(msg)));
     hideLoading();
   }
 
-  logout() async {
+  void logout() async {
     odoo.destroy();
     preferences.remove(Constants.USER_PREF);
     preferences.remove(Constants.SESSION);
     pushAndRemoveUntil(Login());
   }
   
-  changeURL(){
+  void changeURL(){
     preferences.remove(Constants.ODOO_URL);
     pushAndRemoveUntil(Login());
   }
 
-  showMessage(String title, String message) {
+  void showMessage(String title, String message) {
     hideLoading();
     if (Platform.isAndroid) {
       showDialog(

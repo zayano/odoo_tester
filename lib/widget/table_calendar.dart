@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-
 import '../base.dart';
 
 // Example holidays
@@ -97,7 +96,7 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
     _animationController.forward();
   }
 
-   @override
+  @override
   void dispose() {
     _animationController.dispose();
     _calendarController.dispose();
@@ -111,29 +110,31 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
     });
   }
 
-  void _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
+  void _onVisibleDaysChanged(
+      DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onVisibleDaysChanged');
   }
 
-  void _onCalendarCreated(DateTime first, DateTime last, CalendarFormat format) {
+  void _onCalendarCreated(
+      DateTime first, DateTime last, CalendarFormat format) {
     print('CALLBACK: _onCalendarCreated');
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          // Switch out 2 lines below to play with TableCalendar's settings
-          //-----------------------
-          _buildTableCalendar(),
-          // _buildTableCalendarWithBuilders(),
-          const SizedBox(height: 8.0),
-          _buildButtons(),
-          const SizedBox(height: 8.0),
-          Expanded(child: _buildEventList()),
-        ],
-      );
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        // Switch out 2 lines below to play with TableCalendar's settings
+        //-----------------------
+        _buildTableCalendar(),
+        // _buildTableCalendarWithBuilders(),
+        const SizedBox(height: 8.0),
+        _buildButtons(),
+        const SizedBox(height: 8.0),
+        Expanded(child: _buildEventList()),
+      ],
+    );
   }
 
   // Simple TableCalendar configuration (using Styles)
@@ -150,7 +151,8 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
         outsideDaysVisible: false,
       ),
       headerStyle: HeaderStyle(
-        formatButtonTextStyle: TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        formatButtonTextStyle:
+            TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
         formatButtonDecoration: BoxDecoration(
           color: Colors.deepOrange[400],
           borderRadius: BorderRadius.circular(16.0),
@@ -261,7 +263,9 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
         shape: BoxShape.rectangle,
         color: _calendarController.isSelected(date)
             ? Colors.brown[500]
-            : _calendarController.isToday(date) ? Colors.brown[300] : Colors.blue[400],
+            : _calendarController.isToday(date)
+                ? Colors.brown[300]
+                : Colors.blue[400],
       ),
       width: 16.0,
       height: 16.0,
@@ -306,7 +310,8 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
               child: Text('2 weeks'),
               onPressed: () {
                 setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.twoWeeks);
+                  _calendarController
+                      .setCalendarFormat(CalendarFormat.twoWeeks);
                 });
               },
             ),
@@ -322,7 +327,8 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
         ),
         const SizedBox(height: 8.0),
         RaisedButton(
-          child: Text('Set day ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
+          child: Text(
+              'Set day ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
           onPressed: () {
             _calendarController.setSelectedDay(
               DateTime(dateTime.year, dateTime.month, dateTime.day),
@@ -342,7 +348,8 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
                   border: Border.all(width: 0.8),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
                   title: Text(event.toString()),
                   onTap: () => print('$event tapped!'),
@@ -352,4 +359,3 @@ class _TableCalendarTestingState extends Base<TableCalendarTesting>
     );
   }
 }
-

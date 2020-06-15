@@ -14,7 +14,7 @@ class PartnerList extends StatefulWidget {
 class _PartnerListState extends Base<PartnerList> {
   List<Partner> _partners = [];
 
-  _getPartners() async {
+  void _getPartners() async {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
