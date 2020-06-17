@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testing_flutter/model/partners.dart';
 
+import '../../model/partners.dart';
 import '../../base.dart';
 
 class PartnerDetail extends StatefulWidget {

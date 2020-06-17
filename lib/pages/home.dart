@@ -51,7 +51,7 @@ class _HomeState extends Base<Home> {
     });
   }
 
-  void _check() async {
+  void check() async {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
@@ -80,7 +80,7 @@ class _HomeState extends Base<Home> {
   void initState() {
     getOdooInstance().then((odoo) {
       _getUserData();
-      // _check();
+      // check();
       sessionId = getSession().split(';').elementAt(0);
       url = getURL();
 
