@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:testing_flutter/widget/empty_list.dart';
 
-import '../utility/strings.dart';
-import '../service/odoo_response.dart';
-import '../model/partners.dart';
-import '../base.dart';
+import '../../widget/partner_widget/partner_detail.dart';
+import '../../pages/details.dart';
+import '../../widget/empty_list.dart';
+import '../../utility/strings.dart';
+import '../../service/odoo_response.dart';
+import '../../model/partners.dart';
+import '../../base.dart';
 
 class PartnerList extends StatefulWidget {
   @override
@@ -68,7 +70,14 @@ class _PartnerListState extends Base<PartnerList> {
             itemCount: _partners.length,
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, i) => InkWell(
-              onTap: () {},
+              onTap: () {
+                push(Details(
+                  titleData: "Detail Partner",
+                  widgetClass: PartnerDetail(
+                    dataPartner: _partners[i],
+                  ),
+                ));
+              },
               child: Column(
                 children: <Widget>[
                   Divider(

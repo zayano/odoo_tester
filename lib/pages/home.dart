@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testing_flutter/widget/partner_list.dart';
 
+import '../widget/partner_widget/partner_list.dart';
 import '../widget/meeting_plans.dart';
 import '../model/user_odoo.dart';
 import '../service/odoo_response.dart';
