@@ -19,7 +19,6 @@ class _HomeState extends Base<Home> {
   String email;
   String imageURL;
   String sessionId;
-  String url;
   DateTime startDay;
 
   void _getUserData() async {
@@ -56,8 +55,8 @@ class _HomeState extends Base<Home> {
       if (isInternet) {
         showLoading();
         odoo
-            .checkInvent(Strings.res_company, '1', '2020-06-05 15:00:00',
-                '2020-06-05 18:59:59', '10')
+            .checkInvent(Strings.res_company, '1', '2020-06-12 16:37:55',
+                '2020-06-12 21:37:55', '10')
             .then(
           (OdooResponse res) {
             if (!res.hasError()) {
@@ -82,7 +81,6 @@ class _HomeState extends Base<Home> {
       _getUserData();
       // check();
       sessionId = getSession().split(';').elementAt(0);
-      url = getURL();
 
       if (getURL() != null) {
         imageURL = getURL() +
@@ -90,8 +88,6 @@ class _HomeState extends Base<Home> {
             sessionId +
             "&id=" +
             getUID().toString();
-
-        print(url);
       }
     });
 
