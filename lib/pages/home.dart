@@ -14,12 +14,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends Base<Home> {
+  int _selectedIndex = 0;
   List<UserOdoo> _userOdoo = [];
   String name;
   String email;
   String imageURL;
   String sessionId;
   DateTime startDay;
+
+  //   list of widget
+  final drawerItems = [
+    new PartnerList(),
+    new MeetingPlans(),
+  ];
 
   void _getUserData() async {
     isConnected().then((isInternet) {
@@ -101,8 +108,16 @@ class _HomeState extends Base<Home> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(child: PartnerList()),
-      drawer: HomeDrawer(_userOdoo, imageURL),
+      body: Center(child: drawerItems[this._selectedIndex]),
+      drawer: HomeDrawer(
+        userDataOdoo: _userOdoo,
+        imageURL: imageURL,
+        onTap: (int val) {
+          setState(() {
+            this._selectedIndex = val;
+          });
+        },
+      ),
     );
   }
 }

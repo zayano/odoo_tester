@@ -6,8 +6,9 @@ import '../base.dart';
 class HomeDrawer extends StatefulWidget {
   final userDataOdoo;
   final imageURL;
+  final Function onTap;
 
-  HomeDrawer(this.userDataOdoo, this.imageURL);
+  HomeDrawer({this.userDataOdoo, this.imageURL, this.onTap});
 
   @override
   _HomeDrawerState createState() => _HomeDrawerState();
@@ -15,13 +16,14 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends Base<HomeDrawer> {
   List<UserOdoo> _userOdoo = [];
-
+  Function onTap;
   String imageURL;
 
   @override
   void initState() {
     _userOdoo = widget.userDataOdoo;
     imageURL = widget.imageURL;
+    onTap = widget.onTap;
 
     getOdooInstance().then((value) {});
 
@@ -49,6 +51,31 @@ class _HomeDrawerState extends Base<HomeDrawer> {
                   : "https://i1.wp.com/www.molddrsusa.com/wp-content/uploads/2015/11/profile-empty.png.250x250_q85_crop.jpg?ssl=1"),
             ),
           ),
+          new ListTile(
+            leading: Icon(
+              Icons.home,
+            ),
+            title: Text(
+              'Home',
+            ),
+            onTap: () {
+              onTap(0);
+              Navigator.pop(context);
+            },
+          ),
+          new ListTile(
+            leading: Icon(
+              Icons.calendar_today,
+            ),
+            title: Text(
+              'Meeting Plans',
+            ),
+            onTap: () {
+              onTap(1);
+              Navigator.pop(context);
+            },
+          ),
+          new Divider(),
           new ListTile(
             leading: Icon(
               Icons.exit_to_app,
