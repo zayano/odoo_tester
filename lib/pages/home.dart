@@ -106,7 +106,7 @@ class _HomeState extends Base<Home> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(_selectedIndex == 0 ? 'Home' : 'Meeting Plans'),
       ),
       body: Center(child: drawerItems[this._selectedIndex]),
       drawer: HomeDrawer(
