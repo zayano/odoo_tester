@@ -96,7 +96,14 @@ class _MeetingPlansState extends Base<MeetingPlans> {
       final DateTime startTime = dateStart.add(Duration());
       final DateTime endTime = dateEnd.add(Duration());
       meetings.add(
-          Meeting(labelDate, startTime, endTime, Color(0xFF0F8644), false));
+        Meeting(
+          labelDate,
+          startTime,
+          endTime,
+          Color(0xFF0F8644),
+          false,
+        ),
+      );
     }
     return meetings;
   }

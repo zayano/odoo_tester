@@ -59,7 +59,10 @@ class _PartnerListState extends Base<PartnerList> {
     super.initState();
 
     getOdooInstance().then((value) {
-      _getPartners();
+      if (_partners.isEmpty) {
+        _getPartners();
+        print("jalan aja");
+      }
     });
   }
 

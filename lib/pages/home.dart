@@ -14,12 +14,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends Base<Home> {
+  int _selectedIndex = 0;
   List<UserOdoo> _userOdoo = [];
   String name;
   String email;
   String imageURL;
   String sessionId;
+  String nameUser;
   DateTime startDay;
+
+  //   list of widget
+  final drawerItems = [
+    new PartnerList(),
+    new MeetingPlans(),
+  ];
 
   void _getUserData() async {
     isConnected().then((isInternet) {
@@ -78,7 +86,10 @@ class _HomeState extends Base<Home> {
   @override
   void initState() {
     getOdooInstance().then((odoo) {
-      _getUserData();
+      if (_userOdoo.isEmpty) {
+        _getUserData();
+        print("jalan");
+      }
       // check();
       sessionId = getSession().split(';').elementAt(0);
 
@@ -88,6 +99,10 @@ class _HomeState extends Base<Home> {
             sessionId +
             "&id=" +
             getUID().toString();
+      }
+
+      if (getUser() != null) {
+        nameUser = getUser().result.name;
       }
     });
 
@@ -99,10 +114,18 @@ class _HomeState extends Base<Home> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(_selectedIndex == 0 ? 'Home' : 'Meeting Plans'),
       ),
-      body: Center(child: PartnerList()),
-      drawer: HomeDrawer(_userOdoo, imageURL),
+      body: Center(child: drawerItems[this._selectedIndex]),
+      drawer: HomeDrawer(
+        userDataOdoo: _userOdoo,
+        imageURL: imageURL,
+        onTap: (int val) {
+          setState(() {
+            this._selectedIndex = val;
+          });
+        },
+      ),
     );
   }
 }
