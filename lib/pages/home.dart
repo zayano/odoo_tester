@@ -20,6 +20,7 @@ class _HomeState extends Base<Home> {
   String email;
   String imageURL;
   String sessionId;
+  String nameUser;
   DateTime startDay;
 
   //   list of widget
@@ -85,7 +86,10 @@ class _HomeState extends Base<Home> {
   @override
   void initState() {
     getOdooInstance().then((odoo) {
-      _getUserData();
+      if (_userOdoo.isEmpty) {
+        _getUserData();
+        print("jalan");
+      }
       // check();
       sessionId = getSession().split(';').elementAt(0);
 
@@ -95,6 +99,10 @@ class _HomeState extends Base<Home> {
             sessionId +
             "&id=" +
             getUID().toString();
+      }
+
+      if (getUser() != null) {
+        nameUser = getUser().result.name;
       }
     });
 

@@ -21,9 +21,19 @@ class _HomeDrawerState extends Base<HomeDrawer> {
 
   @override
   void initState() {
-    _userOdoo = widget.userDataOdoo;
-    imageURL = widget.imageURL;
-    onTap = widget.onTap;
+    if (widget.userDataOdoo != null) {
+      _userOdoo = widget.userDataOdoo;
+      print(_userOdoo);
+    }
+
+    if (widget.imageURL != null) {
+      imageURL = widget.imageURL;
+      print(imageURL);
+    }
+
+    if (widget.onTap != null) {
+      onTap = widget.onTap;
+    }
 
     getOdooInstance().then((value) {});
 
