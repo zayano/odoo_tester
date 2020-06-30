@@ -88,6 +88,19 @@ class _HomeDrawerState extends Base<HomeDrawer> {
           new Divider(),
           new ListTile(
             leading: Icon(
+              Icons.book,
+            ),
+            title: Text(
+              'Inventory',
+            ),
+            onTap: () {
+              onTap(2);
+              Navigator.pop(context);
+            },
+          ),
+          new Divider(),
+          new ListTile(
+            leading: Icon(
               Icons.exit_to_app,
               color: Colors.red,
             ),

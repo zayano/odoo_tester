@@ -29,6 +29,7 @@ class _PartnerListState extends Base<PartnerList> {
                 String session = getSession();
                 session = session.split(",")[0].split(";")[0];
                 for (var i in res.getRecords()) {
+                  print(i);
                   _partners.add(
                     new Partner(
                       id: i["id"],

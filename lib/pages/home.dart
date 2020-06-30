@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testing_flutter/widget/inventory_detail.dart';
 
 import '../widget/partner_widget/partner_list.dart';
 import '../widget/meeting_plans.dart';
@@ -27,6 +28,7 @@ class _HomeState extends Base<Home> {
   final drawerItems = [
     new PartnerList(),
     new MeetingPlans(),
+    new InventoryDetail(),
   ];
 
   void _getUserData() async {
@@ -48,31 +50,6 @@ class _HomeState extends Base<Home> {
                     email: i["email"] is! bool ? i["email"] : "No Email",
                   ));
                 }
-              });
-            } else {
-              showMessage("Warning", res.getErrorMessage());
-            }
-          },
-        );
-      }
-    });
-  }
-
-  void check() async {
-    isConnected().then((isInternet) {
-      if (isInternet) {
-        showLoading();
-        odoo
-            .checkInvent(Strings.res_company, '1', '2020-06-12 16:37:55',
-                '2020-06-12 21:37:55', '10')
-            .then(
-          (OdooResponse res) {
-            if (!res.hasError()) {
-              setState(() {
-                hideLoading();
-                String session = getSession();
-                session = session.split(",")[0].split(";")[0];
-                for (var i in res.getRecords()) {}
               });
             } else {
               showMessage("Warning", res.getErrorMessage());
@@ -114,7 +91,9 @@ class _HomeState extends Base<Home> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text(_selectedIndex == 0 ? 'Home' : 'Meeting Plans'),
+        title: Text(_selectedIndex == 0
+            ? 'Home'
+            : _selectedIndex == 1 ? 'Meeting Plans' : 'Inventory'),
       ),
       body: Center(child: drawerItems[this._selectedIndex]),
       drawer: HomeDrawer(
