@@ -18,7 +18,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
-        //input method, id, start_date, end_date, capacity
+        //input method, id, duration_start, duration_end, capacity
         odoo
             .checkInvent(Strings.res_company, '1', '2020-06-30 10:00:00',
                 '2020-06-30 12:00:00', '50')
@@ -64,7 +64,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
       (isInternet) {
         if (isInternet) {
           showLoading();
-          //input method, id1, id2
+          //input method, company_id, company_id
           odoo.cancelBookingAndInvoice(Strings.res_company, 1, 4).then(
             (OdooResponse res) {
               if (!res.hasError()) {
@@ -74,9 +74,9 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                   session = session.split(",")[0].split(";")[0];
                   var result = res.getResult();
                   if (result) {
-                    showMessage("Cancel Booking and Invoice", "Success, result is ${result.toString()}");
+                    showMessage("Success!", "Result is ${result.toString()}");
                   } else {
-                    showMessage("Cancel Booking and Invoice", "Failed, result is ${result.toString()}");
+                    showMessage("Failed!", "Result is ${result.toString()}");
                   }
                 });
               } else {
@@ -94,7 +94,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
       (isInternet) {
         if (isInternet) {
           showLoading();
-          //input method, id1, id2
+          //input method, company_id, company_id
           odoo.refundInvoice(Strings.res_company, 1, 5).then(
             (OdooResponse res) {
               if (!res.hasError()) {
@@ -104,9 +104,9 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                   session = session.split(",")[0].split(";")[0];
                   var result = res.getResult();
                   if (result) {
-                    showMessage("Refund Invoice", "Success, result is ${result.toString()}");
+                    showMessage("Success!", "Result is ${result.toString()}");
                   } else {
-                    showMessage("Refund Invoice", "Failed, result is ${result.toString()}");
+                    showMessage("Failed!", "Result is ${result.toString()}");
                   }
                 });
               } else {
