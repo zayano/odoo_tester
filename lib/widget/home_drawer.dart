@@ -64,6 +64,7 @@ class _HomeDrawerState extends Base<HomeDrawer> {
           new ListTile(
             leading: Icon(
               Icons.home,
+              color: Theme.of(context).primaryColor,
             ),
             title: Text(
               'Home',
@@ -76,6 +77,7 @@ class _HomeDrawerState extends Base<HomeDrawer> {
           new ListTile(
             leading: Icon(
               Icons.calendar_today,
+              color: Theme.of(context).primaryColor,
             ),
             title: Text(
               'Meeting Plans',
@@ -85,10 +87,10 @@ class _HomeDrawerState extends Base<HomeDrawer> {
               Navigator.pop(context);
             },
           ),
-          new Divider(),
           new ListTile(
             leading: Icon(
               Icons.book,
+              color: Theme.of(context).primaryColor,
             ),
             title: Text(
               'Inventory',
