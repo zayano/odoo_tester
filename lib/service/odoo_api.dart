@@ -131,6 +131,12 @@ class Odoo {
         model, "cancel_booking_and_invoice", [idTest1, idTest2]);
   }
 
+  // Refund Invoice result from system
+  Future<OdooResponse> refundInvoice(String model, int idTest1, int idTest2) async {
+    return await callKW(
+        model, "refund_invoice", [idTest1, idTest2]);
+  }
+
   // Call json controller
   Future<OdooResponse> callController(String path, Map params) async {
     return await callRequest(createPath(path), createPayload(params));

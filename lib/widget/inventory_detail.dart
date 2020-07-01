@@ -18,6 +18,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
     isConnected().then((isInternet) {
       if (isInternet) {
         showLoading();
+        //input method, id, start_date, end_date, capacity
         odoo
             .checkInvent(Strings.res_company, '1', '2020-06-30 10:00:00',
                 '2020-06-30 12:00:00', '50')
@@ -50,7 +51,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                 }
               });
             } else {
-              showMessage("Warning", res.getErrorMessage());
+              showMessage("Error", res.getErrorMessage());
             }
           },
         );
@@ -63,6 +64,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
       (isInternet) {
         if (isInternet) {
           showLoading();
+          //input method, id1, id2
           odoo.cancelBookingAndInvoice(Strings.res_company, 1, 4).then(
             (OdooResponse res) {
               if (!res.hasError()) {
@@ -72,13 +74,43 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                   session = session.split(",")[0].split(";")[0];
                   var result = res.getResult();
                   if (result) {
-                    showMessage("Cancel Booking and Invoice", "Success...!");
+                    showMessage("Cancel Booking and Invoice", "Success, result is ${result.toString()}");
                   } else {
-                    showMessage("Cancel Booking and Invoice", "Failed...!");
+                    showMessage("Cancel Booking and Invoice", "Failed, result is ${result.toString()}");
                   }
                 });
               } else {
-                showMessage("Warning", res.getErrorMessage());
+                showMessage("Error", res.getErrorMessage());
+              }
+            },
+          );
+        }
+      },
+    );
+  }
+
+  void refundInvoice() async {
+    isConnected().then(
+      (isInternet) {
+        if (isInternet) {
+          showLoading();
+          //input method, id1, id2
+          odoo.refundInvoice(Strings.res_company, 1, 5).then(
+            (OdooResponse res) {
+              if (!res.hasError()) {
+                setState(() {
+                  hideLoading();
+                  String session = getSession();
+                  session = session.split(",")[0].split(";")[0];
+                  var result = res.getResult();
+                  if (result) {
+                    showMessage("Refund Invoice", "Success, result is ${result.toString()}");
+                  } else {
+                    showMessage("Refund Invoice", "Failed, result is ${result.toString()}");
+                  }
+                });
+              } else {
+                showMessage("Error", res.getErrorMessage());
               }
             },
           );
@@ -180,7 +212,9 @@ class _InventoryDetailState extends Base<InventoryDetail> {
             height: double.minPositive,
             width: double.infinity,
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                refundInvoice();
+              },
               color: Theme.of(context).primaryColor,
               child: Text(
                 'Refund Invoice',
