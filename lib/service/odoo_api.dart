@@ -118,11 +118,17 @@ class Odoo {
     return await callKW(model, "unlink", [ids]);
   }
 
-  // CheckInvent record from system
+  // CheckInvent result from system
   Future<OdooResponse> checkInvent(String model, String id, String startDate,
       String endDate, String limit) async {
     return await callKW(
         model, "check_inventory", [id, startDate, endDate, limit]);
+  }
+
+  // Cancel Booking and Invoice result from system
+  Future<OdooResponse> cancelBookingAndInvoice(String model, int idTest1, int idTest2) async {
+    return await callKW(
+        model, "cancel_booking_and_invoice", [idTest1, idTest2]);
   }
 
   // Call json controller

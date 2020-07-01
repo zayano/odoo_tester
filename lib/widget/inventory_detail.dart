@@ -28,7 +28,7 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                 hideLoading();
                 String session = getSession();
                 session = session.split(",")[0].split(";")[0];
-                List result = res.getResult();
+                var result = res.getResult();
                 for (var i = 0; i < result.length; i++) {
                   if (i.isOdd) {
                     var resultOdd = result[i];
@@ -58,6 +58,35 @@ class _InventoryDetailState extends Base<InventoryDetail> {
     });
   }
 
+  void cancelBooking() async {
+    isConnected().then(
+      (isInternet) {
+        if (isInternet) {
+          showLoading();
+          odoo.cancelBookingAndInvoice(Strings.res_company, 1, 4).then(
+            (OdooResponse res) {
+              if (!res.hasError()) {
+                setState(() {
+                  hideLoading();
+                  String session = getSession();
+                  session = session.split(",")[0].split(";")[0];
+                  var result = res.getResult();
+                  if (result) {
+                    showMessage("Cancel Booking and Invoice", "Success...!");
+                  } else {
+                    showMessage("Cancel Booking and Invoice", "Failed...!");
+                  }
+                });
+              } else {
+                showMessage("Warning", res.getErrorMessage());
+              }
+            },
+          );
+        }
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -69,44 +98,102 @@ class _InventoryDetailState extends Base<InventoryDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return _invent.length > 0
-        ? ListView.builder(
-            itemCount: _invent.length,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemBuilder: (context, i) => InkWell(
-              onTap: () {},
-              child: Column(
-                children: <Widget>[
-                  Divider(
-                    height: 10.0,
-                  ),
-                  ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: _invent.length > 0
+              ? ListView.builder(
+                  itemCount: _invent.length,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, i) => InkWell(
+                    onTap: () {},
+                    child: Column(
                       children: <Widget>[
-                        Text(
-                          _invent[i].name,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Divider(
+                          height: 10.0,
                         ),
+                        ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                _invent[i].name,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          subtitle: Container(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              _invent[i].description,
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 15.0),
+                            ),
+                          ),
+                          trailing: Container(
+                            child: Text(
+                              _invent[i].capacity.toString() +
+                                  "\"" +
+                                  " Capacity",
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                    subtitle: Container(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        _invent[i].description,
-                        style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                      ),
-                    ),
-                    trailing: Container(
-                      child: Text(
-                        _invent[i].capacity.toString() + "\"" + " Capacity",
-                      ),
-                    ),
-                  )
-                ],
+                  ),
+                )
+              : EmptyList(Icons.book, "No Inventory"),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 20,
+            ),
+            height: double.minPositive,
+            width: double.infinity,
+            child: RaisedButton(
+              onPressed: () {
+                cancelBooking();
+              },
+              color: Theme.of(context).primaryColor,
+              child: Text(
+                'Cancel Booking and Invoice',
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
               ),
             ),
-          )
-        : EmptyList(Icons.book, "No Inventory");
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 20,
+            ),
+            height: double.minPositive,
+            width: double.infinity,
+            child: RaisedButton(
+              onPressed: () {},
+              color: Theme.of(context).primaryColor,
+              child: Text(
+                'Refund Invoice',
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
