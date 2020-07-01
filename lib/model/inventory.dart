@@ -4,12 +4,20 @@ class Inventory {
 
   String name;
   String description;
-  int capacity;
+  var locationId;
+  var buildingId;
+  var type;
+  var capacity;
+  var unitPrice;
 
   Inventory({
     this.name,
     this.description,
-    this.capacity
+    this.locationId,
+    this.buildingId,
+    this.type,
+    this.capacity,
+    this.unitPrice,
   });
 
 

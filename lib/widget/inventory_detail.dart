@@ -41,6 +41,18 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                         description: result[i]["description"] is! bool
                             ? result[i]["description"]
                             : "No Description",
+                        locationId: result[i]["location_id"] is! bool
+                            ? result[i]["location_id"]
+                            : "No Location",
+                        buildingId: result[i]["building_id"] is! bool
+                            ? result[i]["building_id"]
+                            : "No Building",
+                        type: result[i]["type"] is! bool
+                            ? result[i]["type"]
+                            : "No Type",
+                        unitPrice: result[i]["unit_price"] is! bool
+                            ? result[i]["unit_price"]
+                            : 0,
                         capacity: result[i]["capacity"] is! bool
                             ? result[i]["capacity"]
                             : 0,
@@ -138,40 +150,54 @@ class _InventoryDetailState extends Base<InventoryDetail> {
               ? ListView.builder(
                   itemCount: _invent.length,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemBuilder: (context, i) => InkWell(
-                    onTap: () {},
-                    child: Column(
-                      children: <Widget>[
-                        Divider(
-                          height: 10.0,
-                        ),
-                        ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                _invent[i].name,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                  itemBuilder: (context, i) => Card(
+                    elevation: 5.0,
+                    margin: EdgeInsets.all(5),
+                    child: InkWell(
+                      onTap: () {},
+                      child: Column(
+                        children: <Widget>[
+                          Divider(
+                            height: 10.0,
+                          ),
+                          ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  _invent[i].name,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            subtitle: Container(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                _invent[i].description,
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 15.0),
                               ),
-                            ],
-                          ),
-                          subtitle: Container(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Text(
-                              _invent[i].description,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 15.0),
                             ),
-                          ),
-                          trailing: Container(
-                            child: Text(
-                              _invent[i].capacity.toString() +
-                                  "\"" +
-                                  " Capacity",
+                            trailing: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    _invent[i].capacity.toString() +
+                                        "\"" +
+                                        " Capacity",
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    _invent[i].unitPrice.toString()
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )
