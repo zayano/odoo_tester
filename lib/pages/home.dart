@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testing_flutter/model/booking.dart';
 import 'package:testing_flutter/widget/inventory_detail.dart';
 
 import '../widget/partner_widget/partner_list.dart';
@@ -17,6 +18,7 @@ class Home extends StatefulWidget {
 class _HomeState extends Base<Home> {
   int _selectedIndex = 0;
   List<UserOdoo> _userOdoo = [];
+  List<Booking> _bookingMeeting = [];
   String name;
   String email;
   String imageURL;
@@ -60,6 +62,41 @@ class _HomeState extends Base<Home> {
     });
   }
 
+  void getDataBooking() async {
+    isConnected().then((isInternet) {
+      if (isInternet) {
+        showLoading();
+        odoo.searchRead('mncl.booking', [], [
+          'id',
+          'start_date',
+          'duration_start',
+          'duration_end',
+        ]).then((OdooResponse response) {
+          if (!response.hasError()) {
+            setState(() {
+              hideLoading();
+              String session = getSession();
+              session = session.split(",")[0].split(";")[0];
+              for (var i in response.getRecords()) {
+                _bookingMeeting.add(Booking(
+                  startDate: i["start_date"] is! bool ? i["start_date"] : "No Start Date",
+                  durationStart: i["duration_start"] is! bool ? i["duration_start"] : "No Duration Start",
+                  durationEnd: i["duration_end"] is! bool ? i["duration_end"] : "No Duration End",
+                  productId: i["product_id"][1] is! bool ? i["product_id"][1] : "No Product",
+                  description: i["description"] is! bool ? i["description"] : "No Description",
+                  partnerId: i["partner_id"][1] is! bool ? i["partner_id"][1] : "No Partner",
+                  meetingSubject: i["meeting_subject"] is! bool ? i["meeting_subject"] : "No Meeting Subject",
+                ));
+              }
+            });
+          } else {
+            showMessage("Warning", response.getErrorMessage());
+          }
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     getOdooInstance().then((odoo) {
@@ -67,7 +104,11 @@ class _HomeState extends Base<Home> {
         _getUserData();
         print("jalan");
       }
-      // check();
+
+      // if (_bookingMeeting.isEmpty){
+      //   getDataBooking();
+      // }
+
       sessionId = getSession().split(';').elementAt(0);
 
       if (getURL() != null) {
