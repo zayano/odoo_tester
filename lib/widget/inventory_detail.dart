@@ -188,10 +188,10 @@ class _InventoryDetailState extends Base<InventoryDetail> {
                                         "\"" +
                                         " Capacity",
                                   ),
-                                  SizedBox(height: 5,),
-                                  Text(
-                                    _invent[i].unitPrice.toString()
+                                  SizedBox(
+                                    height: 5,
                                   ),
+                                  Text(_invent[i].unitPrice.toString()),
                                 ],
                               ),
                             ),

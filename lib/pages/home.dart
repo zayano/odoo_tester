@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testing_flutter/widget/inventory_detail.dart';
 
+import '../widget/inventory_detail.dart';
 import '../widget/partner_widget/partner_list.dart';
 import '../widget/meeting_plans.dart';
 import '../model/user_odoo.dart';
@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends Base<Home> {
   int _selectedIndex = 0;
   List<UserOdoo> _userOdoo = [];
+  String url;
   String name;
   String email;
   String imageURL;
@@ -67,7 +68,7 @@ class _HomeState extends Base<Home> {
         _getUserData();
         print("jalan");
       }
-      // check();
+
       sessionId = getSession().split(';').elementAt(0);
 
       if (getURL() != null) {
@@ -76,6 +77,8 @@ class _HomeState extends Base<Home> {
             sessionId +
             "&id=" +
             getUID().toString();
+
+        url = getURL();
       }
 
       if (getUser() != null) {
@@ -99,6 +102,7 @@ class _HomeState extends Base<Home> {
       drawer: HomeDrawer(
         userDataOdoo: _userOdoo,
         imageURL: imageURL,
+        url: url,
         onTap: (int val) {
           setState(() {
             this._selectedIndex = val;
