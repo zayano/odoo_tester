@@ -7,8 +7,9 @@ class HomeDrawer extends StatefulWidget {
   final userDataOdoo;
   final imageURL;
   final Function onTap;
+  final url;
 
-  HomeDrawer({this.userDataOdoo, this.imageURL, this.onTap});
+  HomeDrawer({this.userDataOdoo, this.imageURL, this.onTap, this.url});
 
   @override
   _HomeDrawerState createState() => _HomeDrawerState();
@@ -18,6 +19,7 @@ class _HomeDrawerState extends Base<HomeDrawer> {
   List<UserOdoo> _userOdoo = [];
   Function onTap;
   String imageURL;
+  String url;
 
   @override
   void initState() {
@@ -33,6 +35,11 @@ class _HomeDrawerState extends Base<HomeDrawer> {
 
     if (widget.onTap != null) {
       onTap = widget.onTap;
+    }
+
+    if (widget.url != null) {
+      url = widget.url;
+      print(url);
     }
 
     getOdooInstance().then((value) {});
@@ -74,31 +81,37 @@ class _HomeDrawerState extends Base<HomeDrawer> {
               Navigator.pop(context);
             },
           ),
-          new ListTile(
-            leading: Icon(
-              Icons.calendar_today,
-              color: Theme.of(context).primaryColor,
+          Visibility(
+            visible: url == 'http://10.1.218.108:8069' ? true : false,
+            child: new ListTile(
+              leading: Icon(
+                Icons.calendar_today,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                'Meeting Plans',
+              ),
+              onTap: () {
+                onTap(1);
+                Navigator.pop(context);
+              },
             ),
-            title: Text(
-              'Meeting Plans',
-            ),
-            onTap: () {
-              onTap(1);
-              Navigator.pop(context);
-            },
           ),
-          new ListTile(
-            leading: Icon(
-              Icons.book,
-              color: Theme.of(context).primaryColor,
+          Visibility(
+            visible: url == 'http://10.1.218.108:8069' ? true : false,
+            child: new ListTile(
+              leading: Icon(
+                Icons.book,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                'Inventory',
+              ),
+              onTap: () {
+                onTap(2);
+                Navigator.pop(context);
+              },
             ),
-            title: Text(
-              'Inventory',
-            ),
-            onTap: () {
-              onTap(2);
-              Navigator.pop(context);
-            },
           ),
           new Divider(),
           new ListTile(

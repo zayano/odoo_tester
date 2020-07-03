@@ -32,9 +32,9 @@ class _PartnerListState extends Base<PartnerList> {
                   print(i);
                   _partners.add(
                     new Partner(
-                      id: i["id"],
+                      id: i["id"] is! bool ? i["id"] : "N/A",
                       email: i["email"] is! bool ? i["email"] : "N/A",
-                      name: i["name"],
+                      name: i["name"] is! bool ? i["name"] : "N/A",
                       phone: i["phone"] is! bool ? i["phone"] : "N/A",
                       imageUrl: getURL() +
                           "/web/image?model=res.partner&field=image&" +
@@ -73,44 +73,48 @@ class _PartnerListState extends Base<PartnerList> {
         ? ListView.builder(
             itemCount: _partners.length,
             physics: const AlwaysScrollableScrollPhysics(),
-            itemBuilder: (context, i) => InkWell(
-              onTap: () {
-                push(Details(
-                  titleData: "Detail Partner",
-                  widgetClass: PartnerDetail(
-                    dataPartner: _partners[i],
-                  ),
-                ));
-              },
-              child: Column(
-                children: <Widget>[
-                  Divider(
-                    height: 10.0,
-                  ),
-                  ListTile(
-                    leading: CircleAvatar(
-                      foregroundColor: Theme.of(context).primaryColor,
-                      backgroundColor: Colors.grey,
-                      backgroundImage: NetworkImage(_partners[i].imageUrl),
+            itemBuilder: (context, i) => Card(
+              elevation: 5.0,
+              margin: EdgeInsets.all(5),
+              child: InkWell(
+                onTap: () {
+                  push(Details(
+                    titleData: "Detail Partner",
+                    widgetClass: PartnerDetail(
+                      dataPartner: _partners[i],
                     ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          _partners[i].name,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                  ));
+                },
+                child: Column(
+                  children: <Widget>[
+                    Divider(
+                      height: 10.0,
                     ),
-                    subtitle: Container(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        _partners[i].email,
-                        style: TextStyle(color: Colors.grey, fontSize: 15.0),
+                    ListTile(
+                      leading: CircleAvatar(
+                        foregroundColor: Theme.of(context).primaryColor,
+                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(_partners[i].imageUrl),
                       ),
-                    ),
-                  )
-                ],
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            _partners[i].name,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      subtitle: Container(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          _partners[i].email,
+                          style: TextStyle(color: Colors.grey, fontSize: 15.0),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
