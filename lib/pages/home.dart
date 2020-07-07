@@ -38,7 +38,11 @@ class _HomeState extends Base<Home> {
         showLoading();
         odoo.searchRead(Strings.res_users, [
           ["id", "=", getUID()]
-        ], []).then(
+        ], [
+          "id",
+          "name",
+          "email"
+        ]).then(
           (OdooResponse res) {
             if (!res.hasError()) {
               setState(() {
