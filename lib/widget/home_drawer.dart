@@ -113,6 +113,22 @@ class _HomeDrawerState extends Base<HomeDrawer> {
               },
             ),
           ),
+          Visibility(
+            visible: url == 'http://10.1.218.108:8069' ? true : false,
+            child: new ListTile(
+              leading: Icon(
+                Icons.folder,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(
+                'Products',
+              ),
+              onTap: () {
+                // onTap(2);
+                Navigator.pop(context);
+              },
+            ),
+          ),
           new Divider(),
           new ListTile(
             leading: Icon(
