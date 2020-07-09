@@ -124,7 +124,7 @@ class _HomeDrawerState extends Base<HomeDrawer> {
                 'Products',
               ),
               onTap: () {
-                // onTap(2);
+                onTap(3);
                 Navigator.pop(context);
               },
             ),

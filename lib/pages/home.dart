@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testing_flutter/widget/products_list.dart';
 
 import '../widget/inventory_detail.dart';
 import '../widget/partner_widget/partner_list.dart';
@@ -30,6 +31,7 @@ class _HomeState extends Base<Home> {
     new PartnerList(),
     new MeetingPlans(),
     new InventoryDetail(),
+    new ProductsList(),
   ];
 
   void _getUserData() async {
@@ -100,7 +102,9 @@ class _HomeState extends Base<Home> {
       appBar: AppBar(
         title: Text(_selectedIndex == 0
             ? 'Home'
-            : _selectedIndex == 1 ? 'Meeting Plans' : 'Inventory'),
+            : _selectedIndex == 1
+                ? 'Meeting Plans'
+                : _selectedIndex == 2 ? 'Inventory' : 'Products'),
       ),
       body: Center(child: drawerItems[this._selectedIndex]),
       drawer: HomeDrawer(

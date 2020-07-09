@@ -87,9 +87,6 @@ class _PartnerListState extends Base<PartnerList> {
                 },
                 child: Column(
                   children: <Widget>[
-                    Divider(
-                      height: 10.0,
-                    ),
                     ListTile(
                       leading: CircleAvatar(
                         foregroundColor: Theme.of(context).primaryColor,
