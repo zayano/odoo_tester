@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
-import 'package:testing_flutter/model/mncl_booking.dart';
 
+import '../model/mncl_booking.dart';
 import '../service/odoo_response.dart';
 import '../base.dart';
 import '../model/booking.dart';
@@ -20,8 +20,9 @@ class _MeetingPlansState extends Base<MeetingPlans> {
   DateTime date;
   List<DateTime> dateDataList;
   List<FlutterWeekViewEvent> weekEvent;
-  bool valueConfirmed = true;
-  bool valueReconfirmed = true;
+  bool valueConfirmed = false;
+  bool valueReconfirmed = false;
+  bool valueAll = true;
 
   @override
   void initState() {
@@ -29,8 +30,7 @@ class _MeetingPlansState extends Base<MeetingPlans> {
       if (getURL() == 'http://10.1.218.108:8069') {
         getDataBooking();
       } else {
-        getDataBookingMeetingConfirmed();
-        getDataBookingMeetingReconfirmed();
+        getDataBookingMeeting();
       }
     });
     super.initState();
@@ -109,6 +109,70 @@ class _MeetingPlansState extends Base<MeetingPlans> {
         odoo.searchRead('mncl.booking', [
           ['state', '=', 'reconfirmed']
         ], [
+          'id',
+          'seq_name',
+          'building_id',
+          'product_id',
+          'start_date',
+          'end_date',
+          'location_id',
+          'capacity_id',
+          'user_id',
+          'business_unit_id',
+          'department_id',
+          'user_phone',
+          'number_of_attendees',
+          'description',
+          'meeting_subject',
+          'state'
+        ]).then((OdooResponse response) {
+          if (!response.hasError()) {
+            setState(() {
+              hideLoading();
+              String session = getSession();
+              session = session.split(",")[0].split(";")[0];
+              for (var i in response.getRecords()) {
+                _meetingMNC.add(
+                  MNCLandBooking(
+                      id: i["id"] is! bool ? i["id"] : 0,
+                      seqName:
+                          i["seq_name"] is! bool ? i["seq_name"] : 'No Name',
+                      startDate: i['start_date'] is! bool
+                          ? i['start_date']
+                          : 'no date',
+                      endDate:
+                          i['end_date'] is! bool ? i['end_date'] : 'no date',
+                      meetingSubject: i['meeting_subject'] is! bool
+                          ? i['meeting_subject']
+                          : 'No Subject',
+                      description: i['description'] is! bool
+                          ? i['description']
+                          : 'No Description',
+                      userId: i['user_id'][1] is! bool
+                          ? i['user_id'][1]
+                          : 'No User Name',
+                      buildingId: i['building_id'] is! bool
+                          ? i['building_id'][1]
+                          : 'No Building',
+                      productId: i['product_id'] is! bool
+                          ? i['product_id'][1]
+                          : 'No Product'),
+                );
+              }
+            });
+          } else {
+            showMessage("Warning", response.getErrorMessage());
+          }
+        });
+      }
+    });
+  }
+
+  void getDataBookingMeeting() async {
+    isConnected().then((isInternet) {
+      if (isInternet) {
+        showLoading();
+        odoo.searchRead('mncl.booking', [], [
           'id',
           'seq_name',
           'building_id',
@@ -264,6 +328,28 @@ class _MeetingPlansState extends Base<MeetingPlans> {
     return weekEvent;
   }
 
+  Widget checkBoxWidget(
+      String title, bool value, bool value2, bool value3, Function getData) {
+    return CheckboxListTile(
+      title: Text(title),
+      value: value,
+      selected: value2 && value3 == true ? false : true,
+      onChanged: (newValue) {
+        setState(() {
+          value = newValue;
+          if (value) {
+            value2 = false;
+            value3 = false;
+            _meetingMNC.clear();
+            getData();
+          } else {
+            _meetingMNC.clear();
+          }
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -278,13 +364,16 @@ class _MeetingPlansState extends Base<MeetingPlans> {
               children: <Widget>[
                 Expanded(
                   child: CheckboxListTile(
-                    title: Text('Confirmed'),
+                    title: Text('Con'),
                     value: valueConfirmed,
-                    activeColor: valueConfirmed ? Colors.blue : Colors.grey,
+                    selected:
+                        valueReconfirmed && valueAll == true ? false : true,
                     onChanged: (newValue) {
                       setState(() {
                         valueConfirmed = newValue;
                         if (valueConfirmed) {
+                          valueReconfirmed = false;
+                          valueAll = false;
                           _meetingMNC.clear();
                           getDataBookingMeetingConfirmed();
                         } else {
@@ -296,9 +385,44 @@ class _MeetingPlansState extends Base<MeetingPlans> {
                 ),
                 Expanded(
                   child: CheckboxListTile(
-                    title: Text('Reconfirmed'),
+                    title: Text('Rec'),
                     value: valueReconfirmed,
-                    onChanged: null,
+                    selected: valueConfirmed && valueAll == true ? false : true,
+                    onChanged: (newValue) {
+                      setState(() {
+                        valueReconfirmed = newValue;
+                        if (valueReconfirmed) {
+                          valueConfirmed = false;
+                          valueAll = false;
+                          _meetingMNC.clear();
+                          getDataBookingMeetingReconfirmed();
+                        } else {
+                          _meetingMNC.clear();
+                        }
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: CheckboxListTile(
+                    title: Text('All'),
+                    value: valueAll,
+                    selected: valueConfirmed && valueReconfirmed == true
+                        ? false
+                        : true,
+                    onChanged: (newValue) {
+                      setState(() {
+                        valueAll = newValue;
+                        if (valueAll) {
+                          valueConfirmed = false;
+                          valueReconfirmed = false;
+                          _meetingMNC.clear();
+                          getDataBookingMeeting();
+                        } else {
+                          _meetingMNC.clear();
+                        }
+                      });
+                    },
                   ),
                 ),
               ],
