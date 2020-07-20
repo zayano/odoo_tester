@@ -20,6 +20,9 @@ class _HomeDrawerState extends Base<HomeDrawer> {
   Function onTap;
   String imageURL;
   String url;
+  SnackBar snackBar = new SnackBar(
+    content: Text('Maintenance...'),
+  );
 
   @override
   void initState() {
@@ -82,7 +85,9 @@ class _HomeDrawerState extends Base<HomeDrawer> {
             },
           ),
           Visibility(
-            visible: url == 'http://10.1.218.108:8069' ? true : false,
+            visible: url == 'http://10.1.218.108:8069'
+                ? true
+                : url == 'http://172.17.20.233:8069' ? true : false,
             child: new ListTile(
               leading: Icon(
                 Icons.calendar_today,
@@ -98,7 +103,9 @@ class _HomeDrawerState extends Base<HomeDrawer> {
             ),
           ),
           Visibility(
-            visible: url == 'http://10.1.218.108:8069' ? true : false,
+            visible: url == 'http://10.1.218.108:8069'
+                ? true
+                : url == 'http://172.17.20.233:8069' ? true : false,
             child: new ListTile(
               leading: Icon(
                 Icons.book,
@@ -108,13 +115,20 @@ class _HomeDrawerState extends Base<HomeDrawer> {
                 'Inventory',
               ),
               onTap: () {
-                onTap(2);
-                Navigator.pop(context);
+                if (url == 'http://172.17.20.233:8069') {
+                  Navigator.pop(context);
+                  Scaffold.of(context).showSnackBar(snackBar);
+                } else {
+                  onTap(2);
+                  Navigator.pop(context);
+                }
               },
             ),
           ),
           Visibility(
-            visible: url == 'http://10.1.218.108:8069' ? true : false,
+            visible: url == 'http://10.1.218.108:8069'
+                ? true
+                : url == 'http://172.17.20.233:8069' ? true : false,
             child: new ListTile(
               leading: Icon(
                 Icons.folder,

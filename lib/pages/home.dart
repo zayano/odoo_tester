@@ -98,6 +98,8 @@ class _HomeState extends Base<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: true,
       key: scaffoldKey,
       appBar: AppBar(
         title: Text(_selectedIndex == 0
