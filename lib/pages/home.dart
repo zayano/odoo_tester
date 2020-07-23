@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing_flutter/widget/products_list.dart';
+import 'package:testing_flutter/widget/sync_calendar.dart';
 
 import '../widget/inventory_detail.dart';
 import '../widget/partner_widget/partner_list.dart';
@@ -29,7 +30,7 @@ class _HomeState extends Base<Home> {
   //   list of widget
   final drawerItems = [
     new PartnerList(),
-    new MeetingPlans(),
+    new SyncCalendar(),
     new InventoryDetail(),
     new ProductsList(),
   ];
